@@ -4,6 +4,8 @@ const usersRouter = require('./routes/users/userRouter')
 const connectDB = require('./config/database');
 const { notFound, globalErrorHander } = require('./middlewares/globalErrorHandler');
 const categoriesRouter = require('./routes/categories/categoriesRouter');
+const postsRouter = require('./routes/posts/postsRouter');
+const commentRouter = require('./routes/comments/commentRouter');
 
 
 //! create an express application
@@ -23,6 +25,10 @@ app.use('/api/v1/users',  usersRouter);
 
 //? setup the categories router
 app.use('/api/v1/categories',  categoriesRouter);
+//?setup the posts Router
+app.use('/api/v1/posts', postsRouter);
+//?setup the comment Router
+app.use('/api/v1/comments', commentRouter);
 
 //? Not found error handler
 app.use(notFound);

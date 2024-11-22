@@ -33,7 +33,7 @@ postViewes:{
 categories:{
     type:mongoose.Schema.Types.ObjectId,
     ref:"categories",
-    required:true,
+    
 },
 scheduledPublished:{
     type:Date,
