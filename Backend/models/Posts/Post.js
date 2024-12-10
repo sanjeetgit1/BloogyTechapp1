@@ -7,7 +7,7 @@
     },
     image:{
         type:String,
-        default:""
+        required:true,
     },
     claps:{
         type:Number,
@@ -19,7 +19,7 @@
     },
 author:{
     type:mongoose.Schema.Types.ObjectId,
-    ref:"User",
+    ref:"user",
     required:true,
 },
 shares:{
@@ -56,8 +56,15 @@ comments:[{
 
 
  },
+
 {
     timestamps:true,
+    toJSON:{
+        virtuals:true,
+    },
+    toObject:{
+        virtuals:true,
+    },
 }
 );
 

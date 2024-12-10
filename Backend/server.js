@@ -6,9 +6,11 @@ const { notFound, globalErrorHander } = require('./middlewares/globalErrorHandle
 const categoriesRouter = require('./routes/categories/categoriesRouter');
 const postsRouter = require('./routes/posts/postsRouter');
 const commentRouter = require('./routes/comments/commentRouter');
+const sendEmail = require('./utils/sendEmail.js');
 
 
-//! create an express application
+//! create an express 
+// sendEmail("projectsanjeet@gmail.com", "HelloWelcome123");
 const app = express();
 
 //? load the environment variable from file .env

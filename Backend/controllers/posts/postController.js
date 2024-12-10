@@ -24,6 +24,7 @@ exports.createPost = asyncHandler(async (req, resp, next) => {
     content,
     category: categoryId,
     author: req?.userAuth?._id,
+    image:req.file.path,
   });
 
   // Update user by adding post in it
@@ -46,14 +47,44 @@ exports.createPost = asyncHandler(async (req, resp, next) => {
     user,
     catg,
   });
+  console.log("file upload:",req.file)
+  resp.send("done");
 });
 
 //@desc Get All Posts
 //@route GET /api/v1/posts
-//@access public
+//@access Private
 exports.getAllPosts = asyncHandler(async(req,resp)=>{
-  // fetch all the posts from the DB
-  const allPosts = await Post.find({});
+ //Get the current user
+ const currentUserId = req.userAuth._id;
+
+ // Get the current time
+ const currentDateTime= new Date();
+
+ // Get all those user who have blocked the current user
+ const userBlockingCurrentUser = await User.find({
+  blockedUsers:currentUserId,
+ });
+
+ //Extract the id of the users who have blocked the current user
+ const blockingUsersIds = userBlockingCurrentUser.map((userObj)=>userObj._id)
+
+
+ const query = {
+  author:{$nin:blockingUsersIds}, $or:[
+    {
+      scheduledPublished:{$lte:currentDateTime},
+      scheduledPublished:null,
+    },
+  ],
+ };
+ //Fetch those posts whose author is not blockingUsersIds
+ const allPosts = await Post.find(query).populate({
+  path:"author",
+  model:"user",
+  select:"email username role",
+ })
+
   //send the response
   resp.json({
     status:"success",

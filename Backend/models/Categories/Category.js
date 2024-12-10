@@ -13,12 +13,12 @@ const categorySchema = new mongoose.Schema(
     },
     shares: {
       type: Number,
-      ref: "Post",
+      default:0,
     },
-    post: [
+    posts: [
       {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Post",
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"Post",
       },
     ],
   },
